@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { AiOutlineShopping } from 'react-icons/ai'
 
@@ -9,7 +9,10 @@ import { useStateContext } from '../context/StateContext';
 
 
 const Navbar = () => {
-  const { showCart ,setShowCart , totalQuantities } = useStateContext();
+  const { showCart ,setShowCart , totalQuantities, userData } = useStateContext();
+  useEffect(() => {
+  }, [userData])
+  const but = userData ? userData.username : NaN;
 
   return (
     <div className="navbar-container">
@@ -18,9 +21,13 @@ const Navbar = () => {
       </p>
 
       <div className="navbar-container-side">
-        <p className="login-icon">
-          <Link href="/loginpage">Login</Link>
-        </p>
+        {/* <p className="login-icon"> */}
+          {/* <Link href="/loginpage">
+            {
+              "Loging"
+            }
+          </Link>
+        </p> */}
 
         <button type="button" className="cart-icon" onClick={() => setShowCart(true)}>
           <AiOutlineShopping />

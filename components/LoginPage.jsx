@@ -23,7 +23,7 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://127.0.0.1:8000/signup', {
+      const response = await fetch('http://127.0.0.1:8000/test/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -33,11 +33,22 @@ const LoginPage = () => {
       });
 
       if (response.ok) {
-        const data = await response.json();
-        console.log('Response data:', data);
-        setToken(data.token);
+        const auth_data = await response.json();
+        console.log('Response data: AUTH _DATA ', auth_data);
+        setToken(auth_data.access_token);
         console.log('Token set');
-        router.push('/success')
+        // router.push('/userpage')
+
+        const customContext = {
+          customData: auth_data.access_token
+        };
+
+        router.push({
+          pathname: '/userpage/', // Specify the target page
+          query: { id: 123 , customData: auth_data.access_token}, // Specify any query parameters if needed
+        });
+
+
       } else {
         console.error('Request failed:', response.statusText);
       }
